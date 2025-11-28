@@ -153,7 +153,8 @@ export default function Dashboard({ medico, onLogout, onReservar, onCalendario }
               </div>
               <div>
                 <h1 className="text-xl font-bold text-gray-800">SQIO</h1>
-                <p className="text-sm text-gray-600">Dr. {medico.nombre} {medico.apellido}</p>
+                <p className="text-sm font-semibold text-gray-800">{medico.nombre} {medico.apellido}</p>
+                <p className="text-xs text-gray-500">{medico.especialidad}</p>
               </div>
             </div>
             <button

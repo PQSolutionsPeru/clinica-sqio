@@ -37,8 +37,9 @@ const salas = [
   }
 ];
 
-// Datos de médicos
+// Datos de usuarios (médicos, administrativos y pacientes)
 const medicos = [
+  // Médicos
   {
     nombre: 'Juan',
     apellido: 'Pérez',
@@ -62,6 +63,40 @@ const medicos = [
     email: 'carlos.rodriguez@clinica.com',
     password: 'demo123',
     telefono: '+51 999 888 555'
+  },
+  // Personal Administrativo
+  {
+    nombre: 'Julio',
+    apellido: 'González',
+    especialidad: 'Asistente Administrativo 1',
+    email: 'julio.gonzalez@clinica.com',
+    password: 'demo123',
+    telefono: '+51 999 888 444'
+  },
+  {
+    nombre: 'Carlos',
+    apellido: 'Sosa',
+    especialidad: 'Asistente Administrativo 2',
+    email: 'carlos.sosa@clinica.com',
+    password: 'demo123',
+    telefono: '+51 999 888 333'
+  },
+  // Pacientes
+  {
+    nombre: 'Usuario',
+    apellido: '1',
+    especialidad: 'Paciente',
+    email: 'usuario1@clinica.com',
+    password: 'demo123',
+    telefono: '+51 999 888 222'
+  },
+  {
+    nombre: 'Usuario',
+    apellido: '2',
+    especialidad: 'Paciente',
+    email: 'usuario2@clinica.com',
+    password: 'demo123',
+    telefono: '+51 999 888 111'
   }
 ];
 
@@ -89,18 +124,18 @@ function insertarSalas() {
   });
 }
 
-// Función para insertar médicos
+// Función para insertar usuarios
 function insertarMedicos() {
   return new Promise((resolve, reject) => {
     let completed = 0;
-    console.log('👨‍⚕️ Insertando médicos...');
+    console.log('👥 Insertando usuarios...');
 
     medicos.forEach((medico, index) => {
       Medico.create(medico, (err) => {
         if (err) {
-          console.error(`❌ Error insertando médico ${medico.nombre}:`, err.message);
+          console.error(`❌ Error insertando usuario ${medico.nombre}:`, err.message);
         } else {
-          console.log(`✅ Dr. ${medico.nombre} ${medico.apellido} - ${medico.especialidad}`);
+          console.log(`✅ ${medico.nombre} ${medico.apellido} - ${medico.especialidad}`);
         }
 
         completed++;
