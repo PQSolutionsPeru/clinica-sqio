@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getSalas, getReservas, cancelarReserva, aceptarConflicto, rechazarConflicto } from '../services/api';
 import { Calendar, Clock, User, LogOut, Plus, X, AlertTriangle, Check } from 'lucide-react';
+import { politicas } from '../data/politicas';
 
 export default function Dashboard({ medico, onLogout, onReservar, onCalendario }) {
   const [reprogramando, setReprogramando] = useState(false);
@@ -8,6 +9,7 @@ export default function Dashboard({ medico, onLogout, onReservar, onCalendario }
   const [reservas, setReservas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [fechaActual] = useState(new Date().toISOString().split('T')[0]);
+  const [mostrarPoliticas, setMostrarPoliticas] = useState(true);
 
   useEffect(() => {
     cargarDatos();
@@ -358,6 +360,79 @@ export default function Dashboard({ medico, onLogout, onReservar, onCalendario }
           </div>
         )}
       </main>
+
+      {/* Modal de Políticas */}
+      {mostrarPoliticas && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+            {/* Header del modal */}
+            <div className="bg-teal-600 text-white p-6 rounded-t-lg">
+              <h2 className="text-2xl font-bold">{politicas.titulo}</h2>
+              <p className="text-teal-100 mt-2">{politicas.subtitulo}</p>
+            </div>
+
+            {/* Contenido del modal */}
+            <div className="p-6 space-y-6">
+              {/* Políticas Generales */}
+              <div>
+                <h3 className="text-xl font-bold text-gray-800 mb-3">{politicas.politicasGenerales.titulo}</h3>
+                <div className="space-y-3 text-gray-700">
+                  {politicas.politicasGenerales.secciones.map((seccion, index) => (
+                    <p key={index} className="leading-relaxed">
+                      <strong>{seccion.titulo}</strong> {seccion.contenido}
+                    </p>
+                  ))}
+                </div>
+              </div>
+
+              {/* Políticas de Salas */}
+              <div className="border-t pt-6">
+                <h3 className="text-xl font-bold text-gray-800 mb-3">{politicas.politicasSalas.titulo}</h3>
+                <div className="space-y-4 text-gray-700">
+                  {politicas.politicasSalas.salas.map((sala, index) => (
+                    <div key={index} className="bg-gray-50 p-4 rounded-lg">
+                      <h4 className="font-semibold text-gray-800 mb-2">
+                        {sala.emoji} {sala.nombre}
+                      </h4>
+                      <p className="text-sm leading-relaxed">{sala.descripcion}</p>
+                    </div>
+                  ))}
+
+                  {/* Sistema de Priorización */}
+                  <div className="bg-teal-50 border border-teal-200 p-4 rounded-lg mt-4">
+                    <h4 className="font-semibold text-teal-800 mb-2">⚡ {politicas.sistemaPriorizacion.titulo}</h4>
+                    <ul className="text-sm space-y-1 text-teal-900">
+                      {politicas.sistemaPriorizacion.niveles.map((nivel, index) => (
+                        <li key={index}>
+                          <strong className={nivel.color}>• {nivel.tipo}:</strong> {nivel.descripcion}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Advertencia Importante */}
+                  <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
+                    <h4 className="font-semibold text-yellow-800 mb-2">⚠️ {politicas.advertenciaImportante.titulo}</h4>
+                    <p className="text-sm text-yellow-900 leading-relaxed">
+                      {politicas.advertenciaImportante.contenido}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer del modal */}
+            <div className="bg-gray-50 px-6 py-4 rounded-b-lg flex justify-end">
+              <button
+                onClick={() => setMostrarPoliticas(false)}
+                className="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6 py-3 rounded-lg transition duration-200"
+              >
+                {politicas.botonAceptar}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
