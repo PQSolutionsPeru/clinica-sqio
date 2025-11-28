@@ -9,10 +9,16 @@ export default function Dashboard({ medico, onLogout, onReservar, onCalendario }
   const [reservas, setReservas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [fechaActual] = useState(new Date().toISOString().split('T')[0]);
-  const [mostrarPoliticas, setMostrarPoliticas] = useState(true);
+  const [mostrarPoliticas, setMostrarPoliticas] = useState(false);
 
   useEffect(() => {
     cargarDatos();
+
+    // Verificar si ya se mostraron las políticas en esta sesión
+    const politicasVistas = sessionStorage.getItem('politicasVistas');
+    if (!politicasVistas) {
+      setMostrarPoliticas(true);
+    }
   }, []);
 
   const cargarDatos = async () => {
@@ -85,6 +91,11 @@ export default function Dashboard({ medico, onLogout, onReservar, onCalendario }
     } catch (error) {
       alert(error.response?.data?.error || 'Error al aceptar conflicto');
     }
+  };
+
+  const cerrarPoliticas = () => {
+    sessionStorage.setItem('politicasVistas', 'true');
+    setMostrarPoliticas(false);
   };
 
   const getEstadoSala = (salaId) => {
@@ -424,7 +435,7 @@ export default function Dashboard({ medico, onLogout, onReservar, onCalendario }
             {/* Footer del modal */}
             <div className="bg-gray-50 px-6 py-4 rounded-b-lg flex justify-end">
               <button
-                onClick={() => setMostrarPoliticas(false)}
+                onClick={cerrarPoliticas}
                 className="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6 py-3 rounded-lg transition duration-200"
               >
                 {politicas.botonAceptar}
