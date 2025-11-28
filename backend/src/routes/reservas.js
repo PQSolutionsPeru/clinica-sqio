@@ -13,7 +13,8 @@ router.get('/', (req, res) => {
     fecha: req.query.fecha,
     medico_id: req.query.medico_id,
     sala_id: req.query.sala_id,
-    estado: req.query.estado
+    estado: req.query.estado,
+    paciente_email: req.query.paciente_email
   };
 
   Reserva.getAll(filters, (err, reservas) => {
@@ -66,6 +67,7 @@ router.post('/', (req, res) => {
     duracion_minutos,
     paciente_nombre,
     paciente_dni,
+    paciente_email,
     tipo_cirugia,
     notas
   } = req.body;
@@ -115,6 +117,7 @@ router.post('/', (req, res) => {
       duracion_minutos,
       paciente_nombre,
       paciente_dni,
+      paciente_email,
       tipo_cirugia,
       notas
     };

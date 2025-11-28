@@ -34,6 +34,11 @@ class Reserva {
       params.push(filters.estado);
     }
 
+    if (filters.paciente_email) {
+      query += ' AND r.paciente_email = ?';
+      params.push(filters.paciente_email);
+    }
+
     query += ' ORDER BY r.fecha DESC, r.hora_inicio';
 
     db.all(query, params, callback);
@@ -154,6 +159,7 @@ class Reserva {
       duracion_minutos,
       paciente_nombre,
       paciente_dni,
+      paciente_email,
       tipo_cirugia,
       notas
     } = data;
@@ -177,11 +183,11 @@ class Reserva {
             (err) => {
               if (err) return callback(err);
               // Crear nueva reserva
-              this._insertReserva(sala_id, medico_id, fecha, hora_inicio, hora_fin, duracion_minutos, paciente_nombre, paciente_dni, tipo_cirugia, notas, callback);
+              this._insertReserva(sala_id, medico_id, fecha, hora_inicio, hora_fin, duracion_minutos, paciente_nombre, paciente_dni, paciente_email, tipo_cirugia, notas, callback);
             }
           );
         } else {
-          this._insertReserva(sala_id, medico_id, fecha, hora_inicio, hora_fin, duracion_minutos, paciente_nombre, paciente_dni, tipo_cirugia, notas, callback);
+          this._insertReserva(sala_id, medico_id, fecha, hora_inicio, hora_fin, duracion_minutos, paciente_nombre, paciente_dni, paciente_email, tipo_cirugia, notas, callback);
         }
       });
     }
@@ -195,7 +201,7 @@ class Reserva {
           // Crear reserva de urgencia con estado pendiente
           this._insertReservaConEstado(
             sala_id, medico_id, fecha, hora_inicio, hora_fin, duracion_minutos,
-            paciente_nombre, paciente_dni, tipo_cirugia, notas,
+            paciente_nombre, paciente_dni, paciente_email, tipo_cirugia, notas,
             'pendiente_confirmacion', 'pendiente_aprobacion',
             (err) => {
               if (err) return callback(err);
@@ -222,22 +228,22 @@ class Reserva {
           );
         } else {
           // Sin conflicto, crear normalmente
-          this._insertReserva(sala_id, medico_id, fecha, hora_inicio, hora_fin, duracion_minutos, paciente_nombre, paciente_dni, tipo_cirugia, notas, callback);
+          this._insertReserva(sala_id, medico_id, fecha, hora_inicio, hora_fin, duracion_minutos, paciente_nombre, paciente_dni, paciente_email, tipo_cirugia, notas, callback);
         }
       });
     }
     // Electiva se crea normalmente
     else {
-      this._insertReserva(sala_id, medico_id, fecha, hora_inicio, hora_fin, duracion_minutos, paciente_nombre, paciente_dni, tipo_cirugia, notas, callback);
+      this._insertReserva(sala_id, medico_id, fecha, hora_inicio, hora_fin, duracion_minutos, paciente_nombre, paciente_dni, paciente_email, tipo_cirugia, notas, callback);
     }
   }
 
   // Método auxiliar para insertar reserva
-  static _insertReserva(sala_id, medico_id, fecha, hora_inicio, hora_fin, duracion_minutos, paciente_nombre, paciente_dni, tipo_cirugia, notas, callback) {
+  static _insertReserva(sala_id, medico_id, fecha, hora_inicio, hora_fin, duracion_minutos, paciente_nombre, paciente_dni, paciente_email, tipo_cirugia, notas, callback) {
     db.run(
-      `INSERT INTO reservas (sala_id, medico_id, fecha, hora_inicio, hora_fin, duracion_minutos, paciente_nombre, paciente_dni, tipo_cirugia, notas)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [sala_id, medico_id, fecha, hora_inicio, hora_fin, duracion_minutos, paciente_nombre, paciente_dni, tipo_cirugia, notas],
+      `INSERT INTO reservas (sala_id, medico_id, fecha, hora_inicio, hora_fin, duracion_minutos, paciente_nombre, paciente_dni, paciente_email, tipo_cirugia, notas)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [sala_id, medico_id, fecha, hora_inicio, hora_fin, duracion_minutos, paciente_nombre, paciente_dni, paciente_email, tipo_cirugia, notas],
       callback
     );
   }
@@ -248,11 +254,11 @@ class Reserva {
   }
 
   // Método auxiliar para insertar reserva con estado personalizado
-  static _insertReservaConEstado(sala_id, medico_id, fecha, hora_inicio, hora_fin, duracion_minutos, paciente_nombre, paciente_dni, tipo_cirugia, notas, estado, estado_conflicto, callback) {
+  static _insertReservaConEstado(sala_id, medico_id, fecha, hora_inicio, hora_fin, duracion_minutos, paciente_nombre, paciente_dni, paciente_email, tipo_cirugia, notas, estado, estado_conflicto, callback) {
     db.run(
-      `INSERT INTO reservas (sala_id, medico_id, fecha, hora_inicio, hora_fin, duracion_minutos, paciente_nombre, paciente_dni, tipo_cirugia, notas, estado, estado_conflicto)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [sala_id, medico_id, fecha, hora_inicio, hora_fin, duracion_minutos, paciente_nombre, paciente_dni, tipo_cirugia, notas, estado, estado_conflicto],
+      `INSERT INTO reservas (sala_id, medico_id, fecha, hora_inicio, hora_fin, duracion_minutos, paciente_nombre, paciente_dni, paciente_email, tipo_cirugia, notas, estado, estado_conflicto)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [sala_id, medico_id, fecha, hora_inicio, hora_fin, duracion_minutos, paciente_nombre, paciente_dni, paciente_email, tipo_cirugia, notas, estado, estado_conflicto],
       callback
     );
   }

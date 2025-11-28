@@ -11,6 +11,7 @@ export default function ReservarSala({ onVolver, onReservaCreada }) {
     duracion_minutos: 120,
     paciente_nombre: '',
     paciente_dni: '',
+    paciente_email: '',
     tipo_cirugia: 'electiva',
     notas: ''
   });
@@ -316,6 +317,20 @@ export default function ReservarSala({ onVolver, onReservaCreada }) {
                   maxLength="8"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   placeholder="12345678"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Email del Paciente
+                </label>
+                <input
+                  type="email"
+                  name="paciente_email"
+                  value={formData.paciente_email}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  placeholder="paciente@email.com"
                 />
               </div>
             </div>

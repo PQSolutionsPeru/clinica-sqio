@@ -80,6 +80,15 @@ db.serialize(() => {
       console.error('Error agregando columna reserva_conflicto_id:', err.message);
     }
   });
+
+  // Agregar columna paciente_email para filtrar reservas por paciente
+  db.run(`
+    ALTER TABLE reservas ADD COLUMN paciente_email TEXT
+  `, (err) => {
+    if (err && !err.message.includes('duplicate column')) {
+      console.error('Error agregando columna paciente_email:', err.message);
+    }
+  });
 });
 
 module.exports = db;

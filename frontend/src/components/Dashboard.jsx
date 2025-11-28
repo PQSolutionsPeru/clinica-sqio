@@ -24,9 +24,16 @@ export default function Dashboard({ medico, onLogout, onReservar, onCalendario }
   const cargarDatos = async () => {
     try {
       setLoading(true);
+
+      // Si el usuario es paciente, filtrar solo sus cirugías por email
+      const filtros = { fecha: fechaActual };
+      if (medico.especialidad === 'Paciente') {
+        filtros.paciente_email = medico.email;
+      }
+
       const [salasData, reservasData] = await Promise.all([
         getSalas(),
-        getReservas({ fecha: fechaActual })
+        getReservas(filtros)
       ]);
       setSalas(salasData);
       setReservas(reservasData);
@@ -185,13 +192,16 @@ export default function Dashboard({ medico, onLogout, onReservar, onCalendario }
               <Calendar className="w-5 h-5" />
               <span className="hidden sm:inline">Ver Calendario</span>
             </button> */}
-            <button
-              onClick={onReservar}
-              className="flex items-center space-x-2 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg transition"
-            >
-              <Plus className="w-5 h-5" />
-              <span>Reservar Sala</span>
-            </button>
+            {/* Solo mostrar botón Reservar si NO es paciente */}
+            {medico.especialidad !== 'Paciente' && (
+              <button
+                onClick={onReservar}
+                className="flex items-center space-x-2 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg transition"
+              >
+                <Plus className="w-5 h-5" />
+                <span>Reservar Sala</span>
+              </button>
+            )}
           </div>
         </div>
 
