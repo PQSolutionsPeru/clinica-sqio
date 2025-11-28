@@ -392,7 +392,7 @@ export default function Dashboard({ medico, onLogout, onReservar, onCalendario }
                   {politicas.politicasSalas.salas.map((sala, index) => (
                     <div key={index} className="bg-gray-50 p-4 rounded-lg">
                       <h4 className="font-semibold text-gray-800 mb-2">
-                        {sala.emoji} {sala.nombre}
+                        {sala.nombre}
                       </h4>
                       <p className="text-sm leading-relaxed">{sala.descripcion}</p>
                     </div>
@@ -400,7 +400,7 @@ export default function Dashboard({ medico, onLogout, onReservar, onCalendario }
 
                   {/* Sistema de Priorización */}
                   <div className="bg-teal-50 border border-teal-200 p-4 rounded-lg mt-4">
-                    <h4 className="font-semibold text-teal-800 mb-2">⚡ {politicas.sistemaPriorizacion.titulo}</h4>
+                    <h4 className="font-semibold text-teal-800 mb-2">{politicas.sistemaPriorizacion.titulo}</h4>
                     <ul className="text-sm space-y-1 text-teal-900">
                       {politicas.sistemaPriorizacion.niveles.map((nivel, index) => (
                         <li key={index}>
@@ -412,7 +412,7 @@ export default function Dashboard({ medico, onLogout, onReservar, onCalendario }
 
                   {/* Advertencia Importante */}
                   <div className="bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
-                    <h4 className="font-semibold text-yellow-800 mb-2">⚠️ {politicas.advertenciaImportante.titulo}</h4>
+                    <h4 className="font-semibold text-yellow-800 mb-2">{politicas.advertenciaImportante.titulo}</h4>
                     <p className="text-sm text-yellow-900 leading-relaxed">
                       {politicas.advertenciaImportante.contenido}
                     </p>

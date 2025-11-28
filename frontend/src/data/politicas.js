@@ -32,22 +32,18 @@ export const politicas = {
     titulo: "Políticas de Uso de Salas Quirúrgicas",
     salas: [
       {
-        emoji: "🏥",
         nombre: "Sala 1 - Cirugía General",
         descripcion: "Equipada con mesa quirúrgica, lámpara cialítica, monitor de signos vitales y electrobisturí. Prioridad para procedimientos de cirugía general. Capacidad para un equipo quirúrgico estándar."
       },
       {
-        emoji: "🦴",
         nombre: "Sala 2 - Traumatología",
         descripcion: "Equipada con mesa ortopédica, arco en C, taladro quirúrgico y sistema de tracción. Reservada preferentemente para procedimientos traumatológicos y ortopédicos que requieran equipamiento especializado."
       },
       {
-        emoji: "🧠",
         nombre: "Sala 3 - Neurocirugía",
         descripcion: "Equipada con microscopio quirúrgico, neuronavegador, craneótomo y monitor multiparamétrico. Uso exclusivo para procedimientos neuroquirúrgicos debido al equipamiento especializado de alto costo."
       },
       {
-        emoji: "❤️",
         nombre: "Sala 4 - Cardiología",
         descripcion: "Equipada con bypass cardiopulmonar, desfibrilador, ecocardiografía y bomba de infusión. Reservada para procedimientos cardiovasculares. Requiere personal especializado en cirugía cardíaca."
       }
