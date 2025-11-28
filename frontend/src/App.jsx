@@ -31,6 +31,7 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('medico');
+    sessionStorage.removeItem('politicasVistas');
     setMedico(null);
     setVista('dashboard');
   };
